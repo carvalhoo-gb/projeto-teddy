@@ -104,7 +104,7 @@ export default class AdicionarParceiro extends Component {
           <div>
             <h4>Parceiro cadastrado com sucesso!</h4>
             <button className="btn btn-success" onClick={this.newParceiro}>
-              Add
+              Adicionar outro parceiro
             </button>
           </div>
         ) : (
