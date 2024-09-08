@@ -1,33 +1,31 @@
 import React, { Component } from "react";
-import TutorialDataService from "../services/tutorial.service";
+import ParceirosService from "../../services/parceiros.service";
 import { Link } from "react-router-dom";
 
-export default class TutorialsList extends Component {
+export default class ListarParceiros extends Component {
   constructor(props) {
     super(props);
-    this.retrieveTutorials = this.retrieveTutorials.bind(this);
+    this.retrieveParceiros = this.retrieveParceiros.bind(this);
     this.refreshList = this.refreshList.bind(this);
-    this.setActiveTutorial = this.setActiveTutorial.bind(this);
-    this.removeAllTutorials = this.removeAllTutorials.bind(this);
+    this.setActiveParceiro = this.setActiveParceiro.bind(this);
 
     this.state = {
-      tutorials: [],
-      currentTutorial: null,
+      parceiros: [],
+      currentParceiro: null,
       currentIndex: -1,
     };
   }
 
   componentDidMount() {
-    this.retrieveTutorials();
+    this.retrieveParceiros();
   }
 
-  retrieveTutorials() {
-    TutorialDataService.getParceiros()
+  retrieveParceiros() {
+    ParceirosService.getParceiros()
       .then(response => {
         this.setState({
-          tutorials: response.data
+          parceiros: response.data
         });
-        console.log(response.data);
       })
       .catch(e => {
         console.log(e);
@@ -35,33 +33,22 @@ export default class TutorialsList extends Component {
   }
 
   refreshList() {
-    this.retrieveTutorials();
+    this.retrieveParceiros();
     this.setState({
-      currentTutorial: null,
+      currentParceiro: null,
       currentIndex: -1
     });
   }
 
-  setActiveTutorial(tutorial, index) {
+  setActiveParceiro(parceiro, index) {
     this.setState({
-      currentTutorial: tutorial,
+      currentParceiro: parceiro,
       currentIndex: index
     });
   }
 
-  removeAllTutorials() {
-    TutorialDataService.deleteTodosParceiros()
-      .then(response => {
-        console.log(response.data);
-        this.refreshList();
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
-
   render() {
-    const { tutorials, currentTutorial, currentIndex } = this.state;
+    const { parceiros, currentParceiro, currentIndex } = this.state;
 
     return (
       <div className="list row">
@@ -69,42 +56,42 @@ export default class TutorialsList extends Component {
           <h4>Parceiros</h4>
 
           <ul className="list-group">
-            {tutorials &&
-              tutorials.map((tutorial, index) => (
+            {parceiros &&
+              parceiros.map((parceiro, index) => (
                 <li
                   className={
                     "list-group-item " +
                     (index === currentIndex ? "active" : "")
                   }
-                  onClick={() => this.setActiveTutorial(tutorial, index)}
+                  onClick={() => this.setActiveParceiro(parceiro, index)}
                   key={index}
                 >
-                  {tutorial.name}
+                  {parceiro.name}
                 </li>
               ))}
           </ul>
         </div>
         <div className="col-md-6">
-          {currentTutorial ? (
+          {currentParceiro ? (
             <div>
               <h4>Dados do Parceiro</h4>
               <div>
                 <label>
                   <strong>Nome:</strong>
                 </label>{" "}
-                {currentTutorial.name}
+                {currentParceiro.name}
               </div>
               <div>
                 <label>
                   <strong>Descrição:</strong>
                 </label>{" "}
-                {currentTutorial.description}
+                {currentParceiro.description}
               </div>
               <div>
                 <label>
                   <strong>Clientes:</strong>
                 </label>{" "}
-                {currentTutorial.clients && currentTutorial.clients.map((client, index) => (
+                {currentParceiro.clients && currentParceiro.clients.map((client, index) => (
                   <div key={index}>{client}</div>
                 ))}
               </div>
@@ -112,22 +99,22 @@ export default class TutorialsList extends Component {
                 <label>
                   <strong>Projetos:</strong>
                 </label>{" "}
-                {currentTutorial.projects && currentTutorial.projects.map((client, index) => (
+                {currentParceiro.projects && currentParceiro.projects.map((client, index) => (
                   <div key={index}>{client}</div>
                 ))}
               </div>
 
               <Link
-                to={"/tutorials/" + currentTutorial.id}
+                to={"/EditarParceiro/" + currentParceiro.id}
                 className="badge badge-warning"
               >
-                Edit
+                Editar
               </Link>
             </div>
           ) : (
             <div>
               <br />
-              <p>Please click on a Tutorial...</p>
+              <p>Por favor, selecione um parceiro.</p>
             </div>
           )}
         </div>

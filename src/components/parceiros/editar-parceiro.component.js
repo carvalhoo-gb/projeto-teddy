@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import TutorialDataService from "../services/tutorial.service";
-import { withRouter } from '../common/with-router';
+import ParceirosService from "../../services/parceiros.service";
+import { withRouter } from '../../common/with-router';
 
-class Tutorial extends Component {
+class EditarParceiro extends Component {
   constructor(props) {
     super(props);
     this.onChangeName = this.onChangeName.bind(this);
@@ -12,7 +12,7 @@ class Tutorial extends Component {
     this.onChangeProject = this.onChangeProject.bind(this);
     this.onChangeProject2 = this.onChangeProject2.bind(this);
     this.getParceiro = this.getParceiro.bind(this);
-    this.updateTutorial = this.updateTutorial.bind(this);
+    this.updateParceiro = this.updateParceiro.bind(this);
     this.deleteParceiro = this.deleteParceiro.bind(this);
     this.idParceiro = this.props.router.params.id;
 
@@ -112,19 +112,18 @@ class Tutorial extends Component {
   }
 
   getParceiro(id) {
-    TutorialDataService.getParceiroById(id)
+    ParceirosService.getParceiroById(id)
       .then(response => {
         this.setState({
           currentParceiro: response.data
         });
-        console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
   }
 
-  updateTutorial() {
+  updateParceiro() {
     var data = {
       id: this.state.currentParceiro.id,
       name: this.state.currentParceiro.name,
@@ -133,14 +132,14 @@ class Tutorial extends Component {
       projects: [this.state.currentParceiro.project, this.state.currentParceiro.project2],
     };
 
-    TutorialDataService.putParceiro(
+    ParceirosService.putParceiro(
       this.idParceiro, data
     )
       .then(response => {
-        console.log(response.data);
         this.setState({
           message: "O parceiro foi atualizado com sucesso!"
         });
+        this.props.router.navigate('/ListarParceiros');
       })
       .catch(e => {
         console.log(e);
@@ -148,10 +147,9 @@ class Tutorial extends Component {
   }
 
   deleteParceiro() {
-    TutorialDataService.deleteParceiroById(this.idParceiro)
+    ParceirosService.deleteParceiroById(this.idParceiro)
       .then(response => {
-        console.log(response.data);
-        this.props.router.navigate('/tutorials');
+        this.props.router.navigate('/ListarParceiros');
       })
       .catch(e => {
         console.log(e);
@@ -250,22 +248,22 @@ class Tutorial extends Component {
               className="badge badge-danger mr-2"
               onClick={this.deleteParceiro}
             >
-              Delete
+              Deletar
             </button>
 
             <button
               type="submit"
               className="badge badge-success"
-              onClick={this.updateTutorial}
+              onClick={this.updateParceiro}
             >
-              Update
+              Atualizar
             </button>
             <p>{this.state.message}</p>
           </div>
         ) : (
           <div>
             <br />
-            <p>Please click on a Tutorial...</p>
+            <p>Por favor, selecione um parceiro.</p>
           </div>
         )}
       </div>
@@ -273,4 +271,4 @@ class Tutorial extends Component {
   }
 }
 
-export default withRouter(Tutorial);
+export default withRouter(EditarParceiro);

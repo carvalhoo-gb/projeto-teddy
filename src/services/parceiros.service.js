@@ -2,7 +2,7 @@ import http from "../http-common";
 
 const url = "https://644060ba792fe886a88de1b9.mockapi.io/v1/test/partners";
 
-class TutorialDataService {
+class ParceirosService {
   getParceiros() {
     return http.get(url);
   }
@@ -24,4 +24,4 @@ class TutorialDataService {
   }
 }
 
-export default new TutorialDataService();
+export default new ParceirosService();
