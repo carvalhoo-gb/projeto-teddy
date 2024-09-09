@@ -24,7 +24,6 @@ export default function Tabela() {
     const [productDialog, setProductDialog] = useState(false);
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [product, setProduct] = useState(emptyProduct);
-    const [selectedProducts, setSelectedProducts] = useState(null);
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef(null);
@@ -56,40 +55,59 @@ export default function Tabela() {
     const saveProduct = () => {
         setSubmitted(true);
 
-        product.clients = [product.client, product.client2]
-        product.projects = [product.project, product.project2]
+        // Definir os arrays de clients e projects
+        product.clients = [product.client, product.client2];
+        product.projects = [product.project, product.project2];
 
-        delete product.client
-        delete product.client2
-        delete product.project
-        delete product.project2
+        // Remover os campos temporários
+        delete product.client;
+        delete product.client2;
+        delete product.project;
+        delete product.project2;
 
-        ParceirosService.postParceiro(product).then(successValidations());
+        setProductDialog(false);
 
-        function successValidations() {
-            if (product.name.trim()) {
+        if (product.id) {
+            ParceirosService.putParceiro(product.id, product).then((response) => {
+                const savedProduct = response.data; // Dados completos vindos do backend
+
                 let _products = [...products];
-                let _product = { ...product };
 
-                if (product.id) {
-                    const index = findIndexById(product.id);
-
-                    _products[index] = _product;
-                    toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Parceiro Atualizado', life: 3000 });
-                } else {
-                    _products.push(_product);
-                    toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Parceiro Cadastrado', life: 3000 });
-                }
+                const index = findIndexById(product.id);
+                _products[index] = savedProduct; // Atualizar o produto com os dados do backend
+                toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Parceiro Atualizado', life: 3000 });
 
                 setProducts(_products);
-                setProductDialog(false);
                 setProduct(emptyProduct);
-            }
-        }
+            }).catch(error => {
+                // Tratar erro, se necessário
+                console.error("Erro ao salvar parceiro", error);
+            });
+        } else {
+            ParceirosService.postParceiro(product).then((response) => {
+                const savedProduct = response.data; // Dados completos vindos do backend
 
+                let _products = [...products];
+
+                _products.push(savedProduct); // Adicionar o novo produto com os dados completos
+                toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Parceiro Cadastrado', life: 3000 });
+
+                setProducts(_products);
+                setProduct(emptyProduct);
+            }).catch(error => {
+                // Tratar erro, se necessário
+                console.error("Erro ao salvar parceiro", error);
+            });
+        }
     };
 
+
     const editProduct = (product) => {
+        product.client = product.clients[0];
+        product.client2 = product.clients[1];
+        product.project = product.projects[0];
+        product.project2 = product.projects[1];
+
         setProduct({ ...product });
         setProductDialog(true);
     };
@@ -129,7 +147,7 @@ export default function Tabela() {
         setProduct(_product);
     };
 
-    const leftToolbarTemplate = () => {
+    const toolbarTemplate = () => {
         return (
             <Button label="Adicionar Parceiro" icon="pi pi-plus" severity="success" onClick={openNew} />
         );
@@ -156,7 +174,7 @@ export default function Tabela() {
     const productDialogFooter = (
         <React.Fragment>
             <Button label="Cancelar" icon="pi pi-times" outlined onClick={hideDialog} />
-            <Button label="Cadastrar" icon="pi pi-check" onClick={saveProduct} />
+            <Button label="Confirmar" icon="pi pi-check" onClick={saveProduct} />
         </React.Fragment>
     );
     const deleteProductDialogFooter = (
@@ -179,10 +197,9 @@ export default function Tabela() {
         <div>
             <Toast ref={toast} />
             <div className="card">
-                <Toolbar center={leftToolbarTemplate}></Toolbar>
+                <Toolbar center={toolbarTemplate}></Toolbar>
 
-                <DataTable ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
-                    dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
+                <DataTable ref={dt} value={products} dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     currentPageReportTemplate="{first} ao {last} de {totalRecords} parceiros" globalFilter={globalFilter} header={header}>
                     <Column field="id" header="Código" sortable style={{ minWidth: '12rem' }}></Column>
@@ -190,7 +207,7 @@ export default function Tabela() {
                     <Column field="description" header="Descrição" sortable style={{ minWidth: '10rem' }}></Column>
                     <Column header="Clientes" body={(rowData) => formatArray(rowData, "clients")} sortable style={{ minWidth: '10rem' }}></Column>
                     <Column header="Projetos" body={(rowData) => formatArray(rowData, "projects")} sortable style={{ minWidth: '10rem' }}></Column>
-                    <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
+                    <Column body={actionBodyTemplate} style={{ minWidth: '12rem' }}></Column>
                 </DataTable>
             </div>
 
@@ -199,21 +216,19 @@ export default function Tabela() {
                     <label htmlFor="name" className="font-bold">
                         Nome
                     </label>
-                    <InputText id="name" value={product.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} />
-                    {submitted && !product.name && <small className="p-error">Nome é obrigatório.</small>}
+                    <InputText id="name" value={product.name} onChange={(e) => onInputChange(e, 'name')} autoFocus />
                 </div>
                 <div className="field">
                     <label htmlFor="description" className="font-bold">
                         Descrição
                     </label>
-                    <InputTextarea id="description" value={product.description} onChange={(e) => onInputChange(e, 'description')} required rows={3} cols={20} />
+                    <InputTextarea id="description" value={product.description} onChange={(e) => onInputChange(e, 'description')} rows={3} cols={20} />
                 </div>
                 <div className="field">
                     <label htmlFor="client" className="font-bold">
                         Cliente
                     </label>
-                    <InputText id="client" value={product.client} onChange={(e) => onInputChange(e, 'client')} required className={classNames({ 'p-invalid': submitted && !product.client })} />
-                    {submitted && !product.client && <small className="p-error">Cliente é obrigatório.</small>}
+                    <InputText id="client" value={product.client} onChange={(e) => onInputChange(e, 'client')} />
                 </div>
                 <div className="field">
                     <label htmlFor="client2" className="font-bold">
@@ -225,8 +240,7 @@ export default function Tabela() {
                     <label htmlFor="project" className="font-bold">
                         Projeto
                     </label>
-                    <InputText id="project" value={product.project} onChange={(e) => onInputChange(e, 'project')} required className={classNames({ 'p-invalid': submitted && !product.project })} />
-                    {submitted && !product.project && <small className="p-error">Projeto é obrigatório.</small>}
+                    <InputText id="project" value={product.project} onChange={(e) => onInputChange(e, 'project')} />
                 </div>
                 <div className="field">
                     <label htmlFor="project2" className="font-bold">
