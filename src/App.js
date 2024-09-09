@@ -1,19 +1,23 @@
-import React, { Component } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import React from "react";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
 import 'primereact/resources/themes/saga-orange/theme.css';  // Tema específico
 import 'primereact/resources/primereact.min.css';          // Estilos primários do PrimeReact
 import 'primeicons/primeicons.css';                        // Ícones do PrimeIcons
+import "./App.css";                      
 
 import ListarParceiros from "./components/parceiros/listar-parceiros.component";
 import ListarEmpresasExternas from "./components/empresas-externas/listar-empresas-externas";
 import Sobre from "./components/sobre/sobre";
+import Login from "./components/login/login";
 
-class App extends Component {
-  render() {
-    return (
-      <div>
+function App() {
+  const location = useLocation();
+
+  return (
+    <div>
+      {/* Condicionalmente renderiza a Navbar apenas se o caminho não for "/login" */}
+      {location.pathname !== '/' && (
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/ListarParceiros"} className="navbar-brand">
             Teddy
@@ -41,18 +45,18 @@ class App extends Component {
             </li>
           </div>
         </nav>
+      )}
 
-        <div className="container mt-3">
-          <Routes>
-            <Route path="/" element={<ListarParceiros/>} />
-            <Route path="/ListarParceiros" element={<ListarParceiros/>} />
-            <Route path="/ListarEmpresasExternas" element={<ListarEmpresasExternas/>} />
-            <Route path="/Sobre" element={<Sobre/>} />
-          </Routes>
-        </div>
+      <div className="container mt-3">
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/ListarParceiros" element={<ListarParceiros />} />
+          <Route path="/ListarEmpresasExternas" element={<ListarEmpresasExternas />} />
+          <Route path="/Sobre" element={<Sobre />} />
+        </Routes>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default App;
