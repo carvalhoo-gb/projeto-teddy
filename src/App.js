@@ -6,11 +6,8 @@ import 'primereact/resources/themes/saga-orange/theme.css';  // Tema específico
 import 'primereact/resources/primereact.min.css';          // Estilos primários do PrimeReact
 import 'primeicons/primeicons.css';                        // Ícones do PrimeIcons
 
-import AdicionarParceiro from "./components/parceiros/adicionar-parceiro";
 import ListarParceiros from "./components/parceiros/listar-parceiros.component";
-import EditarParceiro from "./components/parceiros/editar-parceiro.component";
-import Parceiros from "./components/parceiros/parceiros.component";
-import Tabela from "./components/parceiros/tabela.component";
+import ListarEmpresasExternas from "./components/parceiros/listar-empresas-externas";
 
 class App extends Component {
   render() {
@@ -27,13 +24,8 @@ class App extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to={"/Parceiros"} className="nav-link">
-                Tabela
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to={"/AdicionarParceiro"} className="nav-link">
-                Adicionar Parceiro
+              <Link to={"/ListarEmpresasExternas"} className="nav-link">
+                Empresas Externas
               </Link>
             </li>
           </div>
@@ -43,10 +35,7 @@ class App extends Component {
           <Routes>
             <Route path="/" element={<ListarParceiros/>} />
             <Route path="/ListarParceiros" element={<ListarParceiros/>} />
-            <Route path="/Parceiros" element={<Parceiros/>} />
-            <Route path="/Tabela" element={<Tabela/>} />
-            <Route path="/AdicionarParceiro" element={<AdicionarParceiro/>} />
-            <Route path="/EditarParceiro/:id" element={<EditarParceiro/>} />
+            <Route path="/ListarEmpresasExternas" element={<ListarEmpresasExternas/>} />
           </Routes>
         </div>
       </div>

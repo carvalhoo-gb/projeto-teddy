@@ -1,25 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { classNames } from 'primereact/utils';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import ParceirosService from "../../services/parceiros.service";
+import EmpresasExternasService from "../../services/empresas-externas.service";
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { Toolbar } from 'primereact/toolbar';
-import { InputTextarea } from 'primereact/inputtextarea';
+import { RadioButton } from 'primereact/radiobutton';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
+import { Tag } from 'primereact/tag';
+import { InputNumber } from 'primereact/inputnumber';
 
-export default function Tabela() {
+export default function ListarEmpresasExternas() {
     let emptyProduct = {
         name: "",
-        description: "",
-        client: "",
-        client2: "",
+        companyName: "",
+        collaboratorsCount: "",
+        isActive: "",
     };
-
     const [products, setProducts] = useState(null);
     const [productDialog, setProductDialog] = useState(false);
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
@@ -29,12 +29,12 @@ export default function Tabela() {
     const toast = useRef(null);
     const dt = useRef(null);
 
-    const getParceiros = () => {
-        ParceirosService.getParceiros().then((data) => setProducts(data.data));
+    const getEmpresasExternas = () => {
+        EmpresasExternasService.getEmpresasExternas().then((data) => setProducts(data.data));
     }
 
     useEffect(() => {
-        getParceiros();
+        getEmpresasExternas();
     }, []);
 
     const openNew = () => {
@@ -54,60 +54,43 @@ export default function Tabela() {
 
     const saveProduct = () => {
         setSubmitted(true);
-
-        // Definir os arrays de clients e projects
-        product.clients = [product.client, product.client2];
-        product.projects = [product.project, product.project2];
-
-        // Remover os campos temporários
-        delete product.client;
-        delete product.client2;
-        delete product.project;
-        delete product.project2;
-
         setProductDialog(false);
 
         if (product.id) {
-            ParceirosService.putParceiro(product.id, product).then((response) => {
+            EmpresasExternasService.putEmpresaExterna(product.id, product).then((response) => {
                 const savedProduct = response.data; // Dados completos vindos do backend
 
                 let _products = [...products];
 
                 const index = findIndexById(product.id);
                 _products[index] = savedProduct; // Atualizar o produto com os dados do backend
-                toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Parceiro Atualizado', life: 3000 });
+                toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Empresa Atualizada', life: 3000 });
 
                 setProducts(_products);
                 setProduct(emptyProduct);
             }).catch(error => {
                 // Tratar erro, se necessário
-                console.error("Erro ao salvar parceiro", error);
+                console.error("Erro ao salvar empresa", error);
             });
         } else {
-            ParceirosService.postParceiro(product).then((response) => {
+            EmpresasExternasService.postEmpresaExterna(product).then((response) => {
                 const savedProduct = response.data; // Dados completos vindos do backend
 
                 let _products = [...products];
 
                 _products.push(savedProduct); // Adicionar o novo produto com os dados completos
-                toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Parceiro Cadastrado', life: 3000 });
+                toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Empresa Cadastrada', life: 3000 });
 
                 setProducts(_products);
                 setProduct(emptyProduct);
             }).catch(error => {
                 // Tratar erro, se necessário
-                console.error("Erro ao salvar parceiro", error);
+                console.error("Erro ao salvar parceira", error);
             });
         }
     };
 
-
     const editProduct = (product) => {
-        product.client = product.clients[0];
-        product.client2 = product.clients[1];
-        product.project = product.projects[0];
-        product.project2 = product.projects[1];
-
         setProduct({ ...product });
         setProductDialog(true);
     };
@@ -122,7 +105,7 @@ export default function Tabela() {
 
         setProducts(_products);
         setDeleteProductDialog(false);
-        ParceirosService.deleteParceiroById(product.id).then(() => toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Parceiro deletado.', life: 3000 }));
+        EmpresasExternasService.deleteEmpresaExternaById(product.id).then(() => toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Empresa deletada.', life: 3000 }));
     };
 
     const findIndexById = (id) => {
@@ -149,8 +132,26 @@ export default function Tabela() {
 
     const toolbarTemplate = () => {
         return (
-            <Button label="Adicionar Parceiro" icon="pi pi-plus" severity="success" onClick={openNew} />
+            <Button label="Adicionar Empresa" icon="pi pi-plus" severity="success" onClick={openNew} />
         );
+    };
+
+    const statusBodyTemplate = (rowData) => {
+        rowData.isActive === true || rowData.isActive === "Ativa" ? rowData.isActive = "Ativa" : rowData.isActive = "Inativa"
+        return <Tag value={rowData.isActive} severity={getSeverity(rowData)}></Tag>;
+    };
+
+    const getSeverity = (product) => {
+        switch (product.isActive) {
+            case "Ativa":
+                return 'success';
+
+            case "Inativa":
+                return 'danger';
+
+            default:
+                return null;
+        }
     };
 
     const actionBodyTemplate = (rowData) => {
@@ -164,7 +165,7 @@ export default function Tabela() {
 
     const header = (
         <div className="c-6 flex flex-wrap gap-2 align-items-center justify-content-between">
-            <h4 className="m-0">Parceiros</h4>
+            <h4 className="m-0">Empresas Externas</h4>
             <IconField iconPosition="left">
                 <InputIcon className="pi pi-search" />
                 <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Search..." />
@@ -184,13 +185,11 @@ export default function Tabela() {
         </React.Fragment>
     );
 
-    const formatArray = (rowData, attribute) => {
-        return rowData[attribute]?.map((item, index) => (
-            <React.Fragment key={index}>
-                {item}
-                <br />
-            </React.Fragment>
-        ));
+    const onCategoryChange = (e) => {
+        let _product = { ...product };
+
+        _product['isActive'] = e.value;
+        setProduct(_product);
     };
 
     return (
@@ -201,17 +200,17 @@ export default function Tabela() {
 
                 <DataTable ref={dt} value={products} dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                    currentPageReportTemplate="{first} ao {last} de {totalRecords} parceiros" globalFilter={globalFilter} header={header}>
+                    currentPageReportTemplate="{first} ao {last} de {totalRecords} empresas" globalFilter={globalFilter} header={header}>
                     <Column field="id" header="Código" sortable style={{ minWidth: '12rem' }}></Column>
                     <Column field="name" header="Nome" sortable style={{ minWidth: '16rem' }}></Column>
-                    <Column field="description" header="Descrição" sortable style={{ minWidth: '10rem' }}></Column>
-                    <Column header="Clientes" body={(rowData) => formatArray(rowData, "clients")} sortable style={{ minWidth: '10rem' }}></Column>
-                    <Column header="Projetos" body={(rowData) => formatArray(rowData, "projects")} sortable style={{ minWidth: '10rem' }}></Column>
+                    <Column field="companyName" header="Empresa" sortable style={{ minWidth: '10rem' }}></Column>
+                    <Column field="collaboratorsCount" header="N° de Colaboradores" sortable style={{ minWidth: '10rem' }}></Column>
+                    <Column field="isActive" header="Status" body={statusBodyTemplate} sortable style={{ minWidth: '12rem' }}></Column>
                     <Column body={actionBodyTemplate} style={{ minWidth: '12rem' }}></Column>
                 </DataTable>
             </div>
 
-            <Dialog visible={productDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Dados do Parceiro" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+            <Dialog visible={productDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Dados da Empresa" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
                 <div className="field">
                     <label htmlFor="name" className="font-bold">
                         Nome
@@ -219,36 +218,31 @@ export default function Tabela() {
                     <InputText id="name" value={product.name} onChange={(e) => onInputChange(e, 'name')} autoFocus />
                 </div>
                 <div className="field">
-                    <label htmlFor="description" className="font-bold">
-                        Descrição
+                    <label htmlFor="companyName" className="font-bold">
+                        Nome da Empresa
                     </label>
-                    <InputTextarea id="description" value={product.description} onChange={(e) => onInputChange(e, 'description')} rows={3} cols={20} />
+                    <InputText id="companyName" value={product.companyName} onChange={(e) => onInputChange(e, 'companyName')} />
                 </div>
                 <div className="field">
-                    <label htmlFor="client" className="font-bold">
-                        Cliente
+                    <label htmlFor="collaboratorsCount" className="font-bold">
+                        N° de Colaboradores
                     </label>
-                    <InputText id="client" value={product.client} onChange={(e) => onInputChange(e, 'client')} />
+                    <InputText id="collaboratorsCount" value={product.collaboratorsCount} onChange={(e) => onInputChange(e, 'collaboratorsCount')} keyfilter="int" />
                 </div>
                 <div className="field">
-                    <label htmlFor="client2" className="font-bold">
-                        Cliente 2
-                    </label>
-                    <InputText id="client2" value={product.client2} onChange={(e) => onInputChange(e, 'client2')} />
-                </div>
-                <div className="field">
-                    <label htmlFor="project" className="font-bold">
-                        Projeto
-                    </label>
-                    <InputText id="project" value={product.project} onChange={(e) => onInputChange(e, 'project')} />
-                </div>
-                <div className="field">
-                    <label htmlFor="project2" className="font-bold">
-                        Projeto 2
-                    </label>
-                    <InputText id="project2" value={product.project2} onChange={(e) => onInputChange(e, 'project2')} />
-                </div>
+                    <label className="mb-3 font-bold">Status da Empresa</label>
 
+                    <div className="formgrid grid">
+                        <div className="field-radiobutton col-6">
+                            <RadioButton inputId="status" name="status" value="Ativa" onChange={onCategoryChange} checked={product.isActive === "Ativa"} />
+                            <label className='mb-0' htmlFor="status">Ativa</label>
+                        </div>
+                        <div className="field-radiobutton col-6">
+                            <RadioButton inputId="status2" name="status2" value="Inativa" onChange={onCategoryChange} checked={product.isActive === "Inativa"} />
+                            <label className='mb-0' htmlFor="status2">Inativa</label>
+                        </div>
+                    </div>
+                </div>
             </Dialog>
 
             <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
@@ -256,7 +250,7 @@ export default function Tabela() {
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
                     {product && (
                         <span>
-                            Tem certeza que deseja excluir o seguinte parceiro: <br></br><b>{product.name}</b>?
+                            Tem certeza que deseja excluir a seguinte empresa: <br></br><b>{product.name}</b>?
                         </span>
                     )}
                 </div>

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { classNames } from 'primereact/utils';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import ParceirosService from "../../services/parceiros.service";
+import ParceirosService from "../../../services/parceiros.service";
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { Toolbar } from 'primereact/toolbar';
@@ -11,7 +12,7 @@ import { InputIcon } from 'primereact/inputicon';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 
-export default function ListarParceiros() {
+export default function Tabela() {
     let emptyProduct = {
         name: "",
         description: "",

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import ParceirosService from "../../services/parceiros.service";
-import { withRouter } from '../../common/with-router';
+import ParceirosService from "../../../services/parceiros.service";
+import { withRouter } from '../../../common/with-router';
 
 class EditarParceiro extends Component {
   constructor(props) {

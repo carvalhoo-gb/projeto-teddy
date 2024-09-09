@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ParceirosService from "../../services/parceiros.service";
+import ParceirosService from "../../../services/parceiros.service";
 
 export default class AdicionarParceiro extends Component {
   constructor(props) {
