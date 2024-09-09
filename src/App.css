@@ -1,4 +1,46 @@
-/* App.css */
-/* .custom-menubar {
-    background-color: whitesmoke;
-} */
+.custom-menubar {
+    background-color: #151515;
+    border-color: #151515;
+}
+
+.p-menuitem-text,
+.welcome {
+    color: white;
+}
+
+.p-menuitem-link:hover {
+    background-color: #EB6625;
+    border-color: #EB6625;
+    color: white;
+}
+
+.p-button-success,
+.btn-entrar, .btn-orange {
+    background-color: #EB6625;
+    border-color: #EB6625;
+    color: white;
+}
+
+.btn-red-not-bg {
+    background-color: transparent;
+    border-color: red;
+    color: red;
+}
+
+.btn-orange-not-bg {
+    background-color: transparent;
+    border-color: #EB6625;
+    color: #EB6625;
+}
+
+.p-button-danger {
+    background-color: red;
+    border-color: red;
+    color: white;
+}
+
+.p-button-warning {
+    background-color: orange;
+    border-color: orange;
+    color: white;
+}

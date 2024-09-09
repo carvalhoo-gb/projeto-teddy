@@ -5,7 +5,7 @@ import profileImage from '../../media/profile.jpg';
 import 'primeflex/primeflex.css';
 
 export default function Sobre() {
-  const header = <h1>Aplicação de Gestão de Empresas Externas e Parceiros</h1>;
+  const header = <h1 className='mt-0'>Aplicação de Gestão de Empresas Externas e Parceiros</h1>;
   const footer = (
     <div className="flex flex-column align-items-center">
       <Avatar image={profileImage} size="xlarge" shape="circle" />
@@ -14,7 +14,7 @@ export default function Sobre() {
   );
 
   return (
-    <div className="sobre flex justify-content-center align-items-center min-h-screen">
+    <div className="sobre flex justify-content-center align-items-center">
       <Card title={header} footer={footer}>
         <section>
           <h2>Visão Geral</h2>

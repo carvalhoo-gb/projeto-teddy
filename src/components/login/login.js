@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { Button } from 'primereact/button';        // Importar corretamente o componente Button
-import { Checkbox } from 'primereact/checkbox';    // Importar corretamente o componente Checkbox
-import { InputText } from 'primereact/inputtext';  // Importar corretamente o componente InputText
-import { Card } from 'primereact/card';            // Importar corretamente o componente Card
+import React, { useState, useEffect } from 'react';
+import { Button } from 'primereact/button';
+import { Checkbox } from 'primereact/checkbox';
+import { InputText } from 'primereact/inputtext';
+import { Card } from 'primereact/card';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';                   // Certifique-se de ter a dependência js-cookie instalada
+import Cookies from 'js-cookie';
+import "./login.css";
 
 export default function Login() {
     const [username, setUsername] = useState('');
@@ -12,14 +13,24 @@ export default function Login() {
     const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        // Adiciona a classe `login-page` ao <body> quando o componente é montado
+        document.body.classList.add('login-page');
+
+        // Remove a classe `login-page` ao <body> quando o componente é desmontado
+        return () => {
+            document.body.classList.remove('login-page');
+        };
+    }, []);
+
     const handleLogin = () => {
-        // Simular o redirecionamento após o login
         if (rememberMe) {
             Cookies.set('username', username, { expires: 7 }); // Cookie expira em 7 dias
         } else {
             localStorage.setItem('username', username);
         }
         navigate('/ListarParceiros'); // Redireciona para a página inicial
+        window.location.reload(); // Força o recarregamento da página para garantir que o estado do username seja atualizado
     };
 
     return (
@@ -38,7 +49,7 @@ export default function Login() {
                         <Checkbox inputId="rememberMe" checked={rememberMe} onChange={(e) => setRememberMe(e.checked)} />
                         <label htmlFor="rememberMe">Manter Conectado</label>
                     </div>
-                    <Button label="Entrar" onClick={handleLogin} className="p-mt-3" />
+                    <Button label="Entrar" onClick={handleLogin} className="btn-entrar p-mt-3" />
                 </div>
             </Card>
         </div>

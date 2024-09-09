@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, Link, useLocation } from "react-router-dom";
-// import 'primereact/resources/themes/tailwind-light/theme.css';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import 'primereact/resources/themes/saga-orange/theme.css';
-import 'primereact/resources/primereact.min.css';          // Estilos primários do PrimeReact
-import 'primeicons/primeicons.css';                        // Ícones do PrimeIcons
+import 'primereact/resources/primereact.min.css';          
+import 'primeicons/primeicons.css';                        
 import Cookies from 'js-cookie';
 import { Menubar } from 'primereact/menubar';
-import { Badge } from 'primereact/badge';
 import LogoTeddy from "./media/logo-teddy.png";
-import './App.css'
+import './App.css';
 
 import ListarParceiros from "./components/parceiros/listar-parceiros.component";
 import ListarEmpresasExternas from "./components/empresas-externas/listar-empresas-externas";
@@ -17,24 +15,22 @@ import Login from "./components/login/login";
 
 function App() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
 
   useEffect(() => {
     // Tenta obter o nome de usuário do cookie
     const user = Cookies.get('username');
-    if (user) {
-      setUsername(user);
-    }
-  }, []);
+    user && setUsername(user);
+  }, [navigate]);
 
-  const itemRenderer = (item) => (
-    <a className="flex align-items-center p-menuitem-link">
-      <span className={item.icon} />
-      <span className="mx-2">{item.label}</span>
-      {item.badge && <Badge className="ml-auto" value={item.badge} />}
-      {item.shortcut && <span className="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{item.shortcut}</span>}
-    </a>
-  );
+  const handleLogout = () => {
+    Cookies.remove('username');
+    localStorage.removeItem('username');
+    setUsername(''); // Limpa o estado do username
+    navigate('/'); // Redireciona para a página de login
+  };
+
   const items = [
     {
       label: 'Parceiros',
@@ -50,14 +46,14 @@ function App() {
     },
     {
       label: 'Sair',
-      url: '/' // Redireciona para a página de login
+      command: handleLogout // Adiciona a função de logout ao clicar em "Sair"
     }
   ];
 
-  const start = <img alt="logo" src={LogoTeddy} height="40" className="mr-2"></img>;
+  const start = <img alt="logo" src={LogoTeddy} height="40" className="mr-2" />;
 
   const end = (
-    <div className="flex align-items-center gap-2">
+    <div className="welcome flex align-items-center gap-2">
       <span className="mx-2">{username ? `Bem-vindo, ${username}` : ''}</span>
     </div>
   );
@@ -67,7 +63,6 @@ function App() {
       {location.pathname !== '/' && (
         <Menubar model={items} start={start} end={end} className="custom-menubar" />
       )}
-
       <div className="container mt-3">
         <Routes>
           <Route path="/" element={<Login />} />
@@ -77,7 +72,7 @@ function App() {
         </Routes>
       </div>
     </div>
-  )
+  );
 }
 
 export default App;

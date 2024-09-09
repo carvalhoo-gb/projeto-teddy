@@ -184,7 +184,7 @@ export default function ListarEmpresasExternas() {
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
-                <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => editProduct(rowData)} />
+                <Button icon="pi pi-pencil" rounded outlined className="mr-2" severity="warning" onClick={() => editProduct(rowData)} />
                 <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteProduct(rowData)} />
             </React.Fragment>
         );
@@ -201,14 +201,14 @@ export default function ListarEmpresasExternas() {
     );
     const productDialogFooter = (
         <React.Fragment>
-            <Button label="Cancelar" icon="pi pi-times" outlined onClick={hideDialog} />
-            <Button label="Confirmar" icon="pi pi-check" onClick={saveProduct} />
+            <Button label="Cancelar" icon="pi pi-times" outlined onClick={hideDialog} className='btn-red-not-bg' />
+            <Button label="Confirmar" icon="pi pi-check" onClick={saveProduct} className='btn-orange' />
         </React.Fragment>
     );
     const deleteProductDialogFooter = (
         <React.Fragment>
-            <Button label="No" icon="pi pi-times" outlined onClick={hideDeleteProductDialog} />
-            <Button label="Yes" icon="pi pi-check" severity="danger" onClick={deleteProduct} />
+            <Button label="Não" icon="pi pi-times" outlined className='btn-orange-not-bg' onClick={hideDeleteProductDialog} />
+            <Button label="Sim" icon="pi pi-check" severity="danger" onClick={deleteProduct} />
         </React.Fragment>
     );
 
