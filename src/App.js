@@ -34,6 +34,11 @@ class App extends Component {
                 Sobre
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to={"/"} className="nav-link">
+                Sair
+              </Link>
+            </li>
           </div>
         </nav>
 
