@@ -7,7 +7,7 @@ import 'primereact/resources/primereact.min.css';          // Estilos primários
 import 'primeicons/primeicons.css';                        // Ícones do PrimeIcons
 
 import ListarParceiros from "./components/parceiros/listar-parceiros.component";
-import ListarEmpresasExternas from "./components/parceiros/listar-empresas-externas";
+import ListarEmpresasExternas from "./components/empresas-externas/listar-empresas-externas";
 
 class App extends Component {
   render() {
