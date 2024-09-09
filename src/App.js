@@ -8,6 +8,7 @@ import 'primeicons/primeicons.css';                        // Ícones do PrimeIc
 
 import ListarParceiros from "./components/parceiros/listar-parceiros.component";
 import ListarEmpresasExternas from "./components/empresas-externas/listar-empresas-externas";
+import Sobre from "./components/sobre/sobre";
 
 class App extends Component {
   render() {
@@ -28,6 +29,11 @@ class App extends Component {
                 Empresas Externas
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to={"/Sobre"} className="nav-link">
+                Sobre
+              </Link>
+            </li>
           </div>
         </nav>
 
@@ -36,6 +42,7 @@ class App extends Component {
             <Route path="/" element={<ListarParceiros/>} />
             <Route path="/ListarParceiros" element={<ListarParceiros/>} />
             <Route path="/ListarEmpresasExternas" element={<ListarEmpresasExternas/>} />
+            <Route path="/Sobre" element={<Sobre/>} />
           </Routes>
         </div>
       </div>
