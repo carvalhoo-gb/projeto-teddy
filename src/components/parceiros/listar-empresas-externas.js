@@ -11,7 +11,6 @@ import { InputIcon } from 'primereact/inputicon';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
-import { InputNumber } from 'primereact/inputnumber';
 
 export default function ListarEmpresasExternas() {
     let emptyProduct = {
