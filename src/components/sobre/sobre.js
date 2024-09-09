@@ -1,20 +1,20 @@
 import React from 'react';
 import { Card } from 'primereact/card';
 import { Avatar } from 'primereact/avatar';
+import profileImage from '../../media/profile.jpg';
+import 'primeflex/primeflex.css';
 
 export default function Sobre() {
   const header = <h1>Aplicação de Gestão de Empresas Externas e Parceiros</h1>;
   const footer = (
-    <div>
-      <div className="profile-avatar">
-        <Avatar image="../../media/profile.jpg" size="xlarge" shape="circle" />
-      </div>
-      <label className="p-button-outlined p-button-info">Desenvolvido por Kayã Haufe.</label>
+    <div className="flex flex-column align-items-center">
+      <Avatar image={profileImage} size="xlarge" shape="circle" />
+      <label className="mt-3">Desenvolvido por Kayã Haufe.</label>
     </div>
   );
 
   return (
-    <div className="sobre">
+    <div className="sobre flex justify-content-center align-items-center min-h-screen">
       <Card title={header} footer={footer}>
         <section>
           <h2>Visão Geral</h2>
@@ -32,7 +32,7 @@ export default function Sobre() {
             <li>React para a construção da interface do usuário</li>
             <li>PrimeReact para componentes ricos e estilização</li>
             <li>Integração com APIs RESTful para CRUD de dados</li>
-            <li>Autenticação de usuários para controle de acesso</li>
+            <li>Login com armazenamento em cookie e local storage</li>
           </ul>
         </section>
 
