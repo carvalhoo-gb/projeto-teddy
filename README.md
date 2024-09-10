@@ -14,6 +14,11 @@ Este projeto é uma aplicação de micro front-ends para cadastro e gestão de p
 - `public/` - Arquivos estáticos e `index.html`.
 - `docker/` - Arquivos relacionados ao Docker.
 
+## TODO / TASKS
+- [ ] Implementar testes unitários (estimado: 3 dias)
+- [ ] Automatizar testes de integração (estimado: 5 dias)
+- [ ] Deploy no Vercel (estimado: 1 dia)
+
 ## Configuração do Projeto
 
 ### 1. Clonando o Repositório
