@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'primereact/card';
 import { Avatar } from 'primereact/avatar';
-import profileImage from '../../media/profile.jpg';
+import profileImage from '../../assets/profile.jpg';
 import 'primeflex/primeflex.css';
 
 export default function Sobre() {

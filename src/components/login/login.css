@@ -1,6 +1,6 @@
 /* Garantir que o container da página de login ocupe a tela inteira sem rolagem */
 body.login-page {
-    background-image: url("../../media/bg.jpg");
+    background-image: url("../../assets/bg.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

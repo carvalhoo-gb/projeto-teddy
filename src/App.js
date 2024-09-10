@@ -5,7 +5,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';                        
 import Cookies from 'js-cookie';
 import { Menubar } from 'primereact/menubar';
-import LogoTeddy from "./media/logo-teddy.png";
+import LogoTeddy from "./assets/logo-teddy.png";
 import './App.css';
 
 import ListarParceiros from "./components/parceiros/listar-parceiros.component";
