@@ -1,6 +1,6 @@
 # Projeto Teddy
 
-Este projeto é uma aplicação de micro front-ends para cadastro e gestão de parceiros e empresas externas. A aplicação utiliza React (com PrimeReact) e Angular 15. O projeto é containerizado para facilitar o deploy em ambientes de cloud, como AWS ECS.
+Este projeto é uma aplicação de micro front-ends (facilitando o desenvolvimento individiual de um módulo especifico) para cadastro e gestão de parceiros e empresas externas. A aplicação utiliza React (com PrimeReact) e Angular 15. O projeto é containerizado para facilitar o deploy em ambientes de cloud, como AWS ECS.
 
 ## Tecnologias Utilizadas
 
