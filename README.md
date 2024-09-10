@@ -24,8 +24,6 @@ git clone https://github.com/kayahaufe/teddy.git
 cd teddy
 ```
 
-## Setup
-
 Rode o seguinte comando no diretório do projeto
 
 ```
