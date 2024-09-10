@@ -32,7 +32,23 @@ cd teddy
 Rode o seguinte comando no diretório do projeto
 
 ```
-npm install && npm start
+npm install && npm run dev
+```
+
+Link para acessar no navegador: http://localhost:8081
+
+### Configuração do Docker
+
+Certifique-se de estar na raiz do projeto e execute:
+
+```sh
+docker build -t teddy-app .
+```
+
+Rode o container
+
+```
+docker run -p 5173:5173 teddy-app
 ```
 
 Link para acessar no navegador: http://localhost:8081
