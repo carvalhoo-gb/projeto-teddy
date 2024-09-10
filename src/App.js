@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useLocation, useNavigate, Link  } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate, Link } from 'react-router-dom';
 import 'primereact/resources/themes/saga-orange/theme.css';
-import 'primereact/resources/primereact.min.css';          
-import 'primeicons/primeicons.css';                        
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 import Cookies from 'js-cookie';
 import { Menubar } from 'primereact/menubar';
 import LogoTeddy from "./assets/logo-teddy.png";
@@ -17,11 +17,27 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
+  const [greeting, setGreeting] = useState('');
+
+  // Função para determinar a saudação
+  function getGreeting() {
+    const now = new Date();
+    const hour = now.getHours();
+
+    if (hour < 12) {
+      return 'Bom dia';
+    } else if (hour < 18) {
+      return 'Boa tarde';
+    } else {
+      return 'Boa noite';
+    }
+  }
 
   useEffect(() => {
     // Tenta obter o nome de usuário do cookie
     const user = Cookies.get('username');
     user && setUsername(user);
+    setGreeting(getGreeting());
   }, [navigate]);
 
   const handleLogout = () => {
@@ -58,7 +74,7 @@ function App() {
 
   const end = (
     <div className="welcome flex align-items-center gap-2">
-      <span className="mx-2">{username ? `Bem-vindo, ${username}` : ''}</span>
+      <span className="mx-2">{username ? `${greeting}, ${username}` : ''}</span>
     </div>
   );
 
