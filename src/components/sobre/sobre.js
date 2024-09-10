@@ -51,7 +51,7 @@ export default function Sobre() {
           <ul>
             <li>Cadastro e edição de empresas externas e parceiros</li>
             <li>Suporte a filtragem e busca global</li>
-            <li>Paginação dinâmica para grandes volumes de dados (apenas para Empresas Externas, como solicitado)</li>
+            <li>Paginação dinâmica para grandes volumes de dados</li>
             <li>Feedbacks interativos com Toasts para ações bem-sucedidas</li>
           </ul>
         </section>
