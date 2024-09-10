@@ -95,3 +95,13 @@
     position: absolute; /* Posiciona o ícone sobre o campo de busca */
     right: 1rem; /* Ajusta a posição do ícone dentro do campo de busca */
 }
+
+@media (max-width: 768px) {
+    .header-container {
+        display: block; /* Altera de flex para block em telas menores */
+    }
+
+    .header-right {
+        margin-top: 0.8em;
+    }
+}
