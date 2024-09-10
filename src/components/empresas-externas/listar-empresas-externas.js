@@ -5,24 +5,22 @@ import EmpresasExternasService from "../../services/empresas-externas.service";
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { RadioButton } from 'primereact/radiobutton';
-import { IconField } from 'primereact/iconfield';
-import { InputIcon } from 'primereact/inputicon';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function ListarEmpresasExternas() {
-    let emptyProduct = {
+    let emptyCompany = {
         name: "",
         companyName: "",
         collaboratorsCount: "",
         isActive: "",
     };
-    const [products, setProducts] = useState(null);
-    const [productDialog, setProductDialog] = useState(false);
-    const [deleteProductDialog, setDeleteProductDialog] = useState(false);
-    const [product, setProduct] = useState(emptyProduct);
+    const [companies, setCompanies] = useState(null);
+    const [companyDialog, setCompanyDialog] = useState(false);
+    const [deleteCompanyDialog, setDeleteCompanyDialog] = useState(false);
+    const [company, setCompany] = useState(emptyCompany);
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef(null);
@@ -49,7 +47,7 @@ export default function ListarEmpresasExternas() {
     };
 
     const getEmpresasExternas = () => {
-        EmpresasExternasService.getEmpresasExternas().then((data) => setProducts(data.data));
+        EmpresasExternasService.getEmpresasExternas().then((data) => setCompanies(data.data));
     }
 
     // No carregamento da página, recupera os parâmetros da URL e ajusta a página atual
@@ -64,51 +62,51 @@ export default function ListarEmpresasExternas() {
     }, [location.search]);
 
     const openNew = () => {
-        setProduct(emptyProduct);
+        setCompany(emptyCompany);
         setSubmitted(false);
-        setProductDialog(true);
+        setCompanyDialog(true);
     };
 
     const hideDialog = () => {
         setSubmitted(false);
-        setProductDialog(false);
+        setCompanyDialog(false);
     };
 
-    const hideDeleteProductDialog = () => {
-        setDeleteProductDialog(false);
+    const hideDeleteCompanyDialog = () => {
+        setDeleteCompanyDialog(false);
     };
 
-    const saveProduct = () => {
+    const saveCompany = () => {
         setSubmitted(true);
-        setProductDialog(false);
+        setCompanyDialog(false);
 
-        if (product.id) {
-            EmpresasExternasService.putEmpresaExterna(product.id, product).then((response) => {
-                const savedProduct = response.data; // Dados completos vindos do backend
+        if (company.id) {
+            EmpresasExternasService.putEmpresaExterna(company.id, company).then((response) => {
+                const savedCompany = response.data; // Dados completos vindos do backend
 
-                let _products = [...products];
+                let _companies = [...companies];
 
-                const index = findIndexById(product.id);
-                _products[index] = savedProduct; // Atualizar o produto com os dados do backend
+                const index = findIndexById(company.id);
+                _companies[index] = savedCompany; // Atualizar a empresa com os dados do backend
                 toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Empresa Atualizada', life: 3000 });
 
-                setProducts(_products);
-                setProduct(emptyProduct);
+                setCompanies(_companies);
+                setCompany(emptyCompany);
             }).catch(error => {
                 // Tratar erro, se necessário
                 console.error("Erro ao salvar empresa", error);
             });
         } else {
-            EmpresasExternasService.postEmpresaExterna(product).then((response) => {
-                const savedProduct = response.data; // Dados completos vindos do backend
+            EmpresasExternasService.postEmpresaExterna(company).then((response) => {
+                const savedCompany = response.data; // Dados completos vindos do backend
 
-                let _products = [...products];
+                let _companies = [...companies];
 
-                _products.push(savedProduct); // Adicionar o novo produto com os dados completos
+                _companies.push(savedCompany); // Adicionar a nova empresa com os dados completos
                 toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Empresa Cadastrada', life: 3000 });
 
-                setProducts(_products);
-                setProduct(emptyProduct);
+                setCompanies(_companies);
+                setCompany(emptyCompany);
             }).catch(error => {
                 // Tratar erro, se necessário
                 console.error("Erro ao salvar parceira", error);
@@ -116,29 +114,29 @@ export default function ListarEmpresasExternas() {
         }
     };
 
-    const editProduct = (product) => {
-        setProduct({ ...product });
-        setProductDialog(true);
+    const editCompany = (company) => {
+        setCompany({ ...company });
+        setCompanyDialog(true);
     };
 
-    const confirmDeleteProduct = (product) => {
-        setProduct(product);
-        setDeleteProductDialog(true);
+    const confirmDeleteCompany = (company) => {
+        setCompany(company);
+        setDeleteCompanyDialog(true);
     };
 
-    const deleteProduct = () => {
-        let _products = products.filter((val) => val.id !== product.id);
+    const deleteCompany = () => {
+        let _companies = companies.filter((val) => val.id !== company.id);
 
-        setProducts(_products);
-        setDeleteProductDialog(false);
-        EmpresasExternasService.deleteEmpresaExternaById(product.id).then(() => toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Empresa deletada.', life: 3000 }));
+        setCompanies(_companies);
+        setDeleteCompanyDialog(false);
+        EmpresasExternasService.deleteEmpresaExternaById(company.id).then(() => toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Empresa deletada.', life: 3000 }));
     };
 
     const findIndexById = (id) => {
         let index = -1;
 
-        for (let i = 0; i < products.length; i++) {
-            if (products[i].id === id) {
+        for (let i = 0; i < companies.length; i++) {
+            if (companies[i].id === id) {
                 index = i;
                 break;
             }
@@ -149,11 +147,11 @@ export default function ListarEmpresasExternas() {
 
     const onInputChange = (e, name) => {
         const val = (e.target && e.target.value) || '';
-        let _product = { ...product };
+        let _company = { ...company };
 
-        _product[`${name}`] = val;
+        _company[`${name}`] = val;
 
-        setProduct(_product);
+        setCompany(_company);
     };
 
     const statusBodyTemplate = (rowData) => {
@@ -161,8 +159,8 @@ export default function ListarEmpresasExternas() {
         return <Tag value={rowData.isActive} severity={getSeverity(rowData)}></Tag>;
     };
 
-    const getSeverity = (product) => {
-        switch (product.isActive) {
+    const getSeverity = (company) => {
+        switch (company.isActive) {
             case "Ativa":
                 return 'success';
 
@@ -177,8 +175,8 @@ export default function ListarEmpresasExternas() {
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
-                <Button icon="pi pi-pencil" rounded outlined className="mr-2" severity="warning" onClick={() => editProduct(rowData)} />
-                <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteProduct(rowData)} />
+                <Button icon="pi pi-pencil" rounded outlined className="mr-2" severity="warning" onClick={() => editCompany(rowData)} />
+                <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteCompany(rowData)} />
             </React.Fragment>
         );
     };
@@ -199,24 +197,24 @@ export default function ListarEmpresasExternas() {
         </div>
     );
 
-    const productDialogFooter = (
+    const companyDialogFooter = (
         <React.Fragment>
             <Button label="Cancelar" icon="pi pi-times" outlined onClick={hideDialog} className='btn-red-not-bg' />
-            <Button label="Confirmar" icon="pi pi-check" onClick={saveProduct} className='btn-orange' />
+            <Button label="Confirmar" icon="pi pi-check" onClick={saveCompany} className='btn-orange' />
         </React.Fragment>
     );
-    const deleteProductDialogFooter = (
+    const deleteCompanyDialogFooter = (
         <React.Fragment>
-            <Button label="Não" icon="pi pi-times" outlined className='btn-orange-not-bg' onClick={hideDeleteProductDialog} />
-            <Button label="Sim" icon="pi pi-check" severity="danger" onClick={deleteProduct} />
+            <Button label="Não" icon="pi pi-times" outlined className='btn-orange-not-bg' onClick={hideDeleteCompanyDialog} />
+            <Button label="Sim" icon="pi pi-check" severity="danger" onClick={deleteCompany} />
         </React.Fragment>
     );
 
     const onCategoryChange = (e) => {
-        let _product = { ...product };
+        let _company = { ...company };
 
-        _product['isActive'] = e.value;
-        setProduct(_product);
+        _company['isActive'] = e.value;
+        setCompany(_company);
     };
 
     return (
@@ -225,8 +223,9 @@ export default function ListarEmpresasExternas() {
             <div className="card">
                 <DataTable
                     header={header}
+                    globalFilter={globalFilter}
                     ref={dt}
-                    value={products}
+                    value={companies}
                     dataKey="id"
                     paginator
                     first={currentPage * rowsPerPage}
@@ -245,47 +244,47 @@ export default function ListarEmpresasExternas() {
                 </DataTable>
             </div>
 
-            <Dialog visible={productDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Dados da Empresa" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+            <Dialog visible={companyDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Dados da Empresa" modal className="p-fluid" footer={companyDialogFooter} onHide={hideDialog}>
                 <div className="field">
                     <label htmlFor="name" className="font-bold">
                         Nome
                     </label>
-                    <InputText id="name" value={product.name} onChange={(e) => onInputChange(e, 'name')} autoFocus />
+                    <InputText id="name" value={company.name} onChange={(e) => onInputChange(e, 'name')} autoFocus />
                 </div>
                 <div className="field">
                     <label htmlFor="companyName" className="font-bold">
                         Nome da Empresa
                     </label>
-                    <InputText id="companyName" value={product.companyName} onChange={(e) => onInputChange(e, 'companyName')} />
+                    <InputText id="companyName" value={company.companyName} onChange={(e) => onInputChange(e, 'companyName')} />
                 </div>
                 <div className="field">
                     <label htmlFor="collaboratorsCount" className="font-bold">
                         N° de Colaboradores
                     </label>
-                    <InputText id="collaboratorsCount" value={product.collaboratorsCount} onChange={(e) => onInputChange(e, 'collaboratorsCount')} keyfilter="int" />
+                    <InputText id="collaboratorsCount" value={company.collaboratorsCount} onChange={(e) => onInputChange(e, 'collaboratorsCount')} keyfilter="int" />
                 </div>
                 <div className="field">
                     <label className="mb-3 font-bold">Status da Empresa</label>
 
                     <div className="formgrid grid">
                         <div className="field-radiobutton col-6">
-                            <RadioButton inputId="status" name="status" value="Ativa" onChange={onCategoryChange} checked={product.isActive === "Ativa"} />
+                            <RadioButton inputId="status" name="status" value="Ativa" onChange={onCategoryChange} checked={company.isActive === "Ativa"} />
                             <label className='mb-0' htmlFor="status">Ativa</label>
                         </div>
                         <div className="field-radiobutton col-6">
-                            <RadioButton inputId="status2" name="status2" value="Inativa" onChange={onCategoryChange} checked={product.isActive === "Inativa"} />
+                            <RadioButton inputId="status2" name="status2" value="Inativa" onChange={onCategoryChange} checked={company.isActive === "Inativa"} />
                             <label className='mb-0' htmlFor="status2">Inativa</label>
                         </div>
                     </div>
                 </div>
             </Dialog>
 
-            <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
+            <Dialog visible={deleteCompanyDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteCompanyDialogFooter} onHide={hideDeleteCompanyDialog}>
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    {product && (
+                    {company && (
                         <span>
-                            Tem certeza que deseja excluir a seguinte empresa: <br></br><b>{product.name}</b>?
+                            Tem certeza que deseja excluir a seguinte empresa: <br></br><b>{company.name}</b>?
                         </span>
                     )}
                 </div>

@@ -9,24 +9,24 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 
 export default function ListarParceiros() {
-    let emptyProduct = {
+    let emptyPartner = {
         name: "",
         description: "",
         client: "",
         client2: "",
     };
 
-    const [products, setProducts] = useState(null);
-    const [productDialog, setProductDialog] = useState(false);
-    const [deleteProductDialog, setDeleteProductDialog] = useState(false);
-    const [product, setProduct] = useState(emptyProduct);
+    const [partners, setPartners] = useState(null);
+    const [partnerDialog, setPartnerDialog] = useState(false);
+    const [deletePartnerDialog, setDeletePartnerDialog] = useState(false);
+    const [partner, setPartner] = useState(emptyPartner);
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef(null);
     const dt = useRef(null);
 
     const getParceiros = () => {
-        ParceirosService.getParceiros().then((data) => setProducts(data.data));
+        ParceirosService.getParceiros().then((data) => setPartners(data.data));
     }
 
     useEffect(() => {
@@ -34,62 +34,62 @@ export default function ListarParceiros() {
     }, []);
 
     const openNew = () => {
-        setProduct(emptyProduct);
+        setPartner(emptyPartner);
         setSubmitted(false);
-        setProductDialog(true);
+        setPartnerDialog(true);
     };
 
     const hideDialog = () => {
         setSubmitted(false);
-        setProductDialog(false);
+        setPartnerDialog(false);
     };
 
-    const hideDeleteProductDialog = () => {
-        setDeleteProductDialog(false);
+    const hideDeletePartnerDialog = () => {
+        setDeletePartnerDialog(false);
     };
 
-    const saveProduct = () => {
+    const savePartner = () => {
         setSubmitted(true);
 
         // Definir os arrays de clients e projects
-        product.clients = [product.client, product.client2];
-        product.projects = [product.project, product.project2];
+        partner.clients = [partner.client, partner.client2];
+        partner.projects = [partner.project, partner.project2];
 
         // Remover os campos temporários
-        delete product.client;
-        delete product.client2;
-        delete product.project;
-        delete product.project2;
+        delete partner.client;
+        delete partner.client2;
+        delete partner.project;
+        delete partner.project2;
 
-        setProductDialog(false);
+        setPartnerDialog(false);
 
-        if (product.id) {
-            ParceirosService.putParceiro(product.id, product).then((response) => {
-                const savedProduct = response.data; // Dados completos vindos do backend
+        if (partner.id) {
+            ParceirosService.putParceiro(partner.id, partner).then((response) => {
+                const savedPartner = response.data; // Dados completos vindos do backend
 
-                let _products = [...products];
+                let _partners = [...partners];
 
-                const index = findIndexById(product.id);
-                _products[index] = savedProduct; // Atualizar o produto com os dados do backend
+                const index = findIndexById(partner.id);
+                _partners[index] = savedPartner; // Atualizar o parceiro com os dados do backend
                 toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Parceiro Atualizado', life: 3000 });
 
-                setProducts(_products);
-                setProduct(emptyProduct);
+                setPartners(_partners);
+                setPartner(emptyPartner);
             }).catch(error => {
                 // Tratar erro, se necessário
                 console.error("Erro ao salvar parceiro", error);
             });
         } else {
-            ParceirosService.postParceiro(product).then((response) => {
-                const savedProduct = response.data; // Dados completos vindos do backend
+            ParceirosService.postParceiro(partner).then((response) => {
+                const savedPartner = response.data; // Dados completos vindos do backend
 
-                let _products = [...products];
+                let _partners = [...partners];
 
-                _products.push(savedProduct); // Adicionar o novo produto com os dados completos
+                _partners.push(savedPartner); // Adicionar o novo parceiro com os dados completos
                 toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Parceiro Cadastrado', life: 3000 });
 
-                setProducts(_products);
-                setProduct(emptyProduct);
+                setPartners(_partners);
+                setPartner(emptyPartner);
             }).catch(error => {
                 // Tratar erro, se necessário
                 console.error("Erro ao salvar parceiro", error);
@@ -98,34 +98,34 @@ export default function ListarParceiros() {
     };
 
 
-    const editProduct = (product) => {
-        product.client = product.clients[0];
-        product.client2 = product.clients[1];
-        product.project = product.projects[0];
-        product.project2 = product.projects[1];
+    const editPartner = (partner) => {
+        partner.client = partner.clients[0];
+        partner.client2 = partner.clients[1];
+        partner.project = partner.projects[0];
+        partner.project2 = partner.projects[1];
 
-        setProduct({ ...product });
-        setProductDialog(true);
+        setPartner({ ...partner });
+        setPartnerDialog(true);
     };
 
-    const confirmDeleteProduct = (product) => {
-        setProduct(product);
-        setDeleteProductDialog(true);
+    const confirmDeletePartner = (partner) => {
+        setPartner(partner);
+        setDeletePartnerDialog(true);
     };
 
-    const deleteProduct = () => {
-        let _products = products.filter((val) => val.id !== product.id);
+    const deletePartner = () => {
+        let _partners = partners.filter((val) => val.id !== partner.id);
 
-        setProducts(_products);
-        setDeleteProductDialog(false);
-        ParceirosService.deleteParceiroById(product.id).then(() => toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Parceiro deletado.', life: 3000 }));
+        setPartners(_partners);
+        setDeletePartnerDialog(false);
+        ParceirosService.deleteParceiroById(partner.id).then(() => toast.current.show({ severity: 'success', summary: 'Sucesso!', detail: 'Parceiro deletado.', life: 3000 }));
     };
 
     const findIndexById = (id) => {
         let index = -1;
 
-        for (let i = 0; i < products.length; i++) {
-            if (products[i].id === id) {
+        for (let i = 0; i < partners.length; i++) {
+            if (partners[i].id === id) {
                 index = i;
                 break;
             }
@@ -136,18 +136,18 @@ export default function ListarParceiros() {
 
     const onInputChange = (e, name) => {
         const val = (e.target && e.target.value) || '';
-        let _product = { ...product };
+        let _partner = { ...partner };
 
-        _product[`${name}`] = val;
+        _partner[`${name}`] = val;
 
-        setProduct(_product);
+        setPartner(_partner);
     };
 
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
-                <Button icon="pi pi-pencil" rounded outlined className="mr-2" severity="warning" onClick={() => editProduct(rowData)} />
-                <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteProduct(rowData)} />
+                <Button icon="pi pi-pencil" rounded outlined className="mr-2" severity="warning" onClick={() => editPartner(rowData)} />
+                <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeletePartner(rowData)} />
             </React.Fragment>
         );
     };
@@ -167,17 +167,17 @@ export default function ListarParceiros() {
             </div>
         </div>
     );
-    
-    const productDialogFooter = (
+
+    const partnerDialogFooter = (
         <React.Fragment>
             <Button label="Cancelar" icon="pi pi-times" outlined onClick={hideDialog} className='btn-red-not-bg' />
-            <Button label="Confirmar" icon="pi pi-check" onClick={saveProduct} className='btn-orange' />
+            <Button label="Confirmar" icon="pi pi-check" onClick={savePartner} className='btn-orange' />
         </React.Fragment>
     );
-    const deleteProductDialogFooter = (
+    const deletePartnerDialogFooter = (
         <React.Fragment>
-            <Button label="Não" icon="pi pi-times" outlined className='btn-orange-not-bg' onClick={hideDeleteProductDialog} />
-            <Button label="Sim" icon="pi pi-check" severity="danger" onClick={deleteProduct} />
+            <Button label="Não" icon="pi pi-times" outlined className='btn-orange-not-bg' onClick={hideDeletePartnerDialog} />
+            <Button label="Sim" icon="pi pi-check" severity="danger" onClick={deletePartner} />
         </React.Fragment>
     );
 
@@ -194,7 +194,7 @@ export default function ListarParceiros() {
         <div>
             <Toast ref={toast} />
             <div className="card">
-                <DataTable ref={dt} value={products} dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
+                <DataTable ref={dt} value={partners} dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     currentPageReportTemplate="{first} ao {last} de {totalRecords} parceiros" globalFilter={globalFilter} header={header}>
                     <Column field="id" header="Código" sortable style={{ minWidth: '12rem' }}></Column>
@@ -206,52 +206,52 @@ export default function ListarParceiros() {
                 </DataTable>
             </div>
 
-            <Dialog visible={productDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Dados do Parceiro" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+            <Dialog visible={partnerDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Dados do Parceiro" modal className="p-fluid" footer={partnerDialogFooter} onHide={hideDialog}>
                 <div className="field">
                     <label htmlFor="name" className="font-bold">
                         Nome
                     </label>
-                    <InputText id="name" value={product.name} onChange={(e) => onInputChange(e, 'name')} autoFocus />
+                    <InputText id="name" value={partner.name} onChange={(e) => onInputChange(e, 'name')} autoFocus />
                 </div>
                 <div className="field">
                     <label htmlFor="description" className="font-bold">
                         Descrição
                     </label>
-                    <InputTextarea id="description" value={product.description} onChange={(e) => onInputChange(e, 'description')} rows={3} cols={20} />
+                    <InputTextarea id="description" value={partner.description} onChange={(e) => onInputChange(e, 'description')} rows={3} cols={20} />
                 </div>
                 <div className="field">
                     <label htmlFor="client" className="font-bold">
                         Cliente
                     </label>
-                    <InputText id="client" value={product.client} onChange={(e) => onInputChange(e, 'client')} />
+                    <InputText id="client" value={partner.client} onChange={(e) => onInputChange(e, 'client')} />
                 </div>
                 <div className="field">
                     <label htmlFor="client2" className="font-bold">
                         Cliente 2
                     </label>
-                    <InputText id="client2" value={product.client2} onChange={(e) => onInputChange(e, 'client2')} />
+                    <InputText id="client2" value={partner.client2} onChange={(e) => onInputChange(e, 'client2')} />
                 </div>
                 <div className="field">
                     <label htmlFor="project" className="font-bold">
                         Projeto
                     </label>
-                    <InputText id="project" value={product.project} onChange={(e) => onInputChange(e, 'project')} />
+                    <InputText id="project" value={partner.project} onChange={(e) => onInputChange(e, 'project')} />
                 </div>
                 <div className="field">
                     <label htmlFor="project2" className="font-bold">
                         Projeto 2
                     </label>
-                    <InputText id="project2" value={product.project2} onChange={(e) => onInputChange(e, 'project2')} />
+                    <InputText id="project2" value={partner.project2} onChange={(e) => onInputChange(e, 'project2')} />
                 </div>
 
             </Dialog>
 
-            <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
+            <Dialog visible={deletePartnerDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deletePartnerDialogFooter} onHide={hideDeletePartnerDialog}>
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    {product && (
+                    {partner && (
                         <span>
-                            Tem certeza que deseja excluir o seguinte parceiro: <br></br><b>{product.name}</b>?
+                            Tem certeza que deseja excluir o seguinte parceiro: <br></br><b>{partner.name}</b>?
                         </span>
                     )}
                 </div>
