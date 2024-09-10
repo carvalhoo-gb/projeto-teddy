@@ -21,6 +21,12 @@
     color: white;
 }
 
+.p-button-success:hover,
+.btn-entrar:hover, .btn-orange:hover {
+    background-color: orangered;
+    border-color: orangered;
+}
+
 .btn-red-not-bg {
     background-color: transparent;
     border-color: red;
@@ -32,6 +38,23 @@
     border-color: #EB6625;
     color: #EB6625;
 }
+
+.btn-blue-not-bg {
+    background-color: transparent;
+    border-color: #0A66C2;
+    color: #0A66C2;
+}
+
+.linkedin-button {
+    background-color: #0077b5; /* Cor azul do LinkedIn */
+    color: white;
+    border: none;
+  }
+  
+  .linkedin-button:hover {
+    background-color: #005f87; /* Azul escuro ao passar o mouse */
+  }
+  
 
 .p-button-danger {
     background-color: red;
