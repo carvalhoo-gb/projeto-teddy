@@ -12,7 +12,6 @@ Este projeto é uma aplicação de micro front-ends (facilitando o desenvolvimen
 
 - `src/` - Código-fonte da aplicação.
 - `public/` - Arquivos estáticos e `index.html`.
-- `docker/` - Arquivos relacionados ao Docker.
 
 ## TODO / TASKS
 - [ ] Implementar testes unitários (estimado: 3 dias)
