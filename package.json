@@ -27,7 +27,7 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "teddy"
+    "extends": "react-app"
   },
   "browserslist": {
     "production": [
