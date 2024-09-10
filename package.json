@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist -b main"
+    "deploy": "git subtree push --prefix dist origin main"
   },
   "dependencies": {
     "axios": "^0.27.2",
@@ -23,7 +23,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
-    "vite": "^4.0.0",
-    "gh-pages": "^6.1.1"
+    "vite": "^4.0.0"
   }
 }
