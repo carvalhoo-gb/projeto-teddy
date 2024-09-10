@@ -5,7 +5,6 @@ Este projeto é uma aplicação de micro front-ends para cadastro e gestão de p
 ## Tecnologias Utilizadas
 
 - **Frontend:** React, PrimeReact, Angular 15
-- **Backend:** (Descreva aqui se houver um backend específico)
 - **Containerização:** Docker
 <!-- - **Deploy:** GitHub Pages, AWS ECS -->
 
