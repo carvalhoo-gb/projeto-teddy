@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate, Link  } from 'react-router-dom';
 import 'primereact/resources/themes/saga-orange/theme.css';
 import 'primereact/resources/primereact.min.css';          
 import 'primeicons/primeicons.css';                        
@@ -50,7 +50,11 @@ function App() {
     }
   ];
 
-  const start = <img alt="logo" src={LogoTeddy} height="40" className="mr-2" />;
+  const start = (
+    <Link to="/ListarParceiros">
+      <img alt="logo" src={LogoTeddy} height="40" className="mr-2" />
+    </Link>
+  );
 
   const end = (
     <div className="welcome flex align-items-center gap-2">

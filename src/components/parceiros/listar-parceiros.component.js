@@ -246,7 +246,7 @@ export default function ListarParceiros() {
 
             </Dialog>
 
-            <Dialog visible={deletePartnerDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deletePartnerDialogFooter} onHide={hideDeletePartnerDialog}>
+            <Dialog visible={deletePartnerDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirmar" modal footer={deletePartnerDialogFooter} onHide={hideDeletePartnerDialog}>
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
                     {partner && (

@@ -279,7 +279,7 @@ export default function ListarEmpresasExternas() {
                 </div>
             </Dialog>
 
-            <Dialog visible={deleteCompanyDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteCompanyDialogFooter} onHide={hideDeleteCompanyDialog}>
+            <Dialog visible={deleteCompanyDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirmar" modal footer={deleteCompanyDialogFooter} onHide={hideDeleteCompanyDialog}>
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
                     {company && (
