@@ -14,7 +14,7 @@ RUN npm install --verbose
 COPY . .
 
 # Exponha a porta que o app vai usar
-EXPOSE 3000
+EXPOSE 5173
 
 # Comando para rodar o app
-CMD ["npm", "start"]
+CMD ["npm", "run", "preview"]

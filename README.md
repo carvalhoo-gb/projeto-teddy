@@ -36,3 +36,18 @@ npm install && npm start
 ```
 
 Link para acessar no navegador: http://localhost:8081
+
+### Docker
+
+Certifique-se de estar na raiz do projeto e execute:
+
+```sh
+docker build -t teddy .
+```
+
+Rode o container
+
+```
+docker run -p 3000:3000 teddy-app
+
+```
