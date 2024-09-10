@@ -40,6 +40,7 @@ npm install && npm run dev
 Certifique-se de estar na raiz do projeto e execute:
 
 ```sh
+npm run build
 docker build -t teddy .
 ```
 
