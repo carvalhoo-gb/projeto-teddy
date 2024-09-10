@@ -4,10 +4,7 @@ import { Column } from 'primereact/column';
 import ParceirosService from "../../services/parceiros.service";
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
-import { Toolbar } from 'primereact/toolbar';
 import { InputTextarea } from 'primereact/inputtextarea';
-import { IconField } from 'primereact/iconfield';
-import { InputIcon } from 'primereact/inputicon';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 
@@ -146,12 +143,6 @@ export default function ListarParceiros() {
         setProduct(_product);
     };
 
-    const toolbarTemplate = () => {
-        return (
-            <Button label="Adicionar Parceiro" icon="pi pi-plus" severity="success" onClick={openNew} />
-        );
-    };
-
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
@@ -162,14 +153,21 @@ export default function ListarParceiros() {
     };
 
     const header = (
-        <div className="c-6 flex flex-wrap gap-2 align-items-center justify-content-between">
-            <h4 className="m-0">Parceiros</h4>
-            <IconField iconPosition="left">
-                <InputIcon className="pi pi-search" />
-                <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Buscar..." />
-            </IconField>
+        <div className="header-container">
+            <div className="header-left">
+                <h4 className="m-0">Parceiros</h4>
+                <div className="search-container">
+                    <span className="p-input-icon-left">
+                        <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Buscar..." />
+                    </span>
+                </div>
+            </div>
+            <div className="header-right">
+                <Button label="Adicionar Parceiro" icon="pi pi-plus" severity="success" onClick={openNew} />
+            </div>
         </div>
     );
+    
     const productDialogFooter = (
         <React.Fragment>
             <Button label="Cancelar" icon="pi pi-times" outlined onClick={hideDialog} className='btn-red-not-bg' />
@@ -196,8 +194,6 @@ export default function ListarParceiros() {
         <div>
             <Toast ref={toast} />
             <div className="card">
-                <Toolbar center={toolbarTemplate}></Toolbar>
-
                 <DataTable ref={dt} value={products} dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     currentPageReportTemplate="{first} ao {last} de {totalRecords} parceiros" globalFilter={globalFilter} header={header}>

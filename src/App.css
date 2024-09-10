@@ -1,4 +1,4 @@
-.custom-menubar {
+.custom-menubar, .p-menubar-root-list {
     background-color: #151515;
     border-color: #151515;
 }
@@ -43,4 +43,32 @@
     background-color: orange;
     border-color: orange;
     color: white;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem; /* Adiciona um pouco de padding horizontal */
+}
+
+.header-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem; /* Ajusta o espaço entre o título e o campo de busca */
+}
+
+.search-input {
+    width: 200px; /* Ajuste a largura do campo de busca conforme necessário */
+}
+
+.search-icon {
+    margin-left: -2rem; /* Ajusta o ícone para que fique sobre o campo de busca */
+    position: absolute; /* Posiciona o ícone sobre o campo de busca */
+    right: 1rem; /* Ajusta a posição do ícone dentro do campo de busca */
 }
