@@ -1,13 +1,14 @@
 {
-  "name": "teddy-vite",
+  "name": "teddy",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://kayahaufe.github.io/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "axios": "^0.27.2",
