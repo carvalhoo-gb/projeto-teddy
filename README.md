@@ -22,7 +22,7 @@ Este projeto é uma aplicação de micro front-ends para cadastro e gestão de p
 ```sh
 git clone https://github.com/kayahaufe/teddy.git
 cd teddy
-
+```
 
 ## Setup
 
