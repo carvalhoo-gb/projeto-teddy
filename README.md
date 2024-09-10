@@ -6,7 +6,8 @@ Este projeto é uma aplicação de micro front-ends (facilitando o desenvolvimen
 
 - **Frontend:** React, PrimeReact, Angular 15
 - **Containerização:** Docker
-<!-- - **Deploy:** GitHub Pages, AWS ECS -->
+- **JS-Cookie:** Gestão de cookies
+- **Styled-Components**
 
 ## Estrutura do Projeto
 
