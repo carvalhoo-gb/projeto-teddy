@@ -16,7 +16,7 @@ export default function Sobre() {
       <span className='mt-3'>
         <Button label="LinkedIn" icon="pi pi-linkedin" className="p-button-outlined linkedin-button mr-3" onClick={() => window.open('https://www.linkedin.com/in/kayahaufe')} />
 
-        <a href={Curriculo} download="Curriculo_Kaya_Haufe.pdf">
+        <a href={Curriculo} download="modeloCV.docx">
           <Button label="Currículo" icon="pi pi-download" className="p-button-success" />
         </a>
       </span>
