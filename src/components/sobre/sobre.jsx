@@ -4,7 +4,7 @@ import { Avatar } from 'primereact/avatar';
 import profileImage from '../../assets/profile.jpg';
 import 'primeflex/primeflex.css';
 import { Button } from 'primereact/button';
-import Curriculo from '../../assets/curriculo.pdf'
+import Curriculo from '../../assets/modeloCV.docx'
 
 export default function Sobre() {
   const header = <h1 className='mt-0'>Aplicação de Gestão de Empresas Externas e Parceiros</h1>;
