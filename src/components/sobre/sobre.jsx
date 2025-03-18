@@ -4,7 +4,7 @@ import { Avatar } from 'primereact/avatar';
 import profileImage from '../../assets/profile.jpg';
 import 'primeflex/primeflex.css';
 import { Button } from 'primereact/button';
-import Curriculo from '../../assets/modeloCV.docx'
+import Curriculo from '../../assets/Curriculo_Kaya_Haufe.pdf'
 
 export default function Sobre() {
   const header = <h1 className='mt-0'>Aplicação de Gestão de Empresas Externas e Parceiros</h1>;
@@ -16,7 +16,7 @@ export default function Sobre() {
       <span className='mt-3'>
         <Button label="LinkedIn" icon="pi pi-linkedin" className="p-button-outlined linkedin-button mr-3" onClick={() => window.open('https://www.linkedin.com/in/kayahaufe')} />
 
-        <a href={Curriculo} download="modeloCV.docx">
+        <a href={Curriculo} download="Curriculo_Kaya_Haufe.pdf">
           <Button label="Currículo" icon="pi pi-download" className="p-button-success" />
         </a>
       </span>
