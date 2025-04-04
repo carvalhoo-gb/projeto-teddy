@@ -5,7 +5,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import Cookies from 'js-cookie';
 import { Menubar } from 'primereact/menubar';
-import LogoTeddy from "./assets/logo-teddy.png";
+import LogoTeddy from "./assets/1.jpg";
 import './App.css';
 
 import ListarParceiros from "./components/parceiros/listar-parceiros.component";
@@ -49,13 +49,10 @@ function App() {
 
   const items = [
     {
-      label: 'Parceiros',
+      label: 'Consultar CEP',
       url: '/ListarParceiros'
     },
-    {
-      label: 'Empresas Externas',
-      url: '/ListarEmpresasExternas'
-    },
+    
     {
       label: 'Sobre',
       url: '/Sobre'
@@ -68,7 +65,7 @@ function App() {
 
   const start = (
     <Link to="/ListarParceiros">
-      <img alt="logo" src={LogoTeddy} height="40" className="mr-2" />
+      <img alt="logo" src={LogoTeddy} height="100" className="mr-2" />
     </Link>
   );
 
@@ -89,6 +86,7 @@ function App() {
           <Route path="/ListarParceiros" element={<ListarParceiros />} />
           <Route path="/ListarEmpresasExternas" element={<ListarEmpresasExternas />} />
           <Route path="/Sobre" element={<Sobre />} />
+        
         </Routes>
       </div>
     </div>

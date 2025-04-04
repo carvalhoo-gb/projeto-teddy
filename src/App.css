@@ -1,5 +1,5 @@
 .custom-menubar, .p-menubar-root-list {
-    background-color: #151515;
+    background-color: #100D28;
     border-color: #151515;
 }
 
@@ -9,22 +9,24 @@
 }
 
 .p-menuitem-link:hover {
-    background-color: #EB6625;
-    border-color: #EB6625;
+    background-color: #578690;
+    border-color: #578690;
     color: white;
+    border-radius: 3px;
 }
 
 .p-button-success,
-.btn-entrar, .btn-orange {
-    background-color: #EB6625;
-    border-color: #EB6625;
+.btn-entrar, .btn-black {
+    
+    background-color: #151515;
+    border-color: #151515;
     color: white;
 }
 
 .p-button-success:hover,
-.btn-entrar:hover, .btn-orange:hover {
-    background-color: orangered;
-    border-color: orangered;
+.btn-entrar:hover, .btn-black:hover {
+    background-color: #578690;
+    border-color: #578690;
 }
 
 .btn-red-not-bg {
@@ -33,10 +35,10 @@
     color: red;
 }
 
-.btn-orange-not-bg {
+.btn-black-not-bg {
     background-color: transparent;
-    border-color: #EB6625;
-    color: #EB6625;
+    border-color: #000000;
+    color: #000000;
 }
 
 .btn-blue-not-bg {
@@ -45,16 +47,45 @@
     color: #0A66C2;
 }
 
-.linkedin-button {
-    background-color: #0077b5; /* Cor azul do LinkedIn */
+.insta-button {
+    background-color: #100D28; 
     color: white;
     border: none;
   }
   
-  .linkedin-button:hover {
-    background-color: #005f87; /* Azul escuro ao passar o mouse */
+  .insta-button:hover {
+    background-color: #578690; 
   }
-  
+  .profile {
+    display: flex;
+    justify-content: center;
+    gap: 40px; /* Espaço entre os perfis */
+    flex-wrap: wrap; /* Permite quebrar para próxima linha em telas pequenas */
+    text-align: center;
+}
+.title {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-container label {
+    margin-top: 10px;
+    color: #333;
+}
+
+.insta-button {
+    border-radius: 5px;
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+}
+
 
 .p-button-danger {
     background-color: red;
@@ -67,12 +98,29 @@
     border-color: orange;
     color: white;
 }
+.p-inputtext {
+    box-shadow: none !important;
+    border: 1px solid #ccc; /* Ajusta a borda para manter um estilo limpo */
+}
 
+.p-inputtext:focus {
+    box-shadow: none !important;
+    border-color: #578690; /* Define a borda quando focado */
+}
+.text-home{
+    text-align: center;
+}
 .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 1rem; /* Adiciona um pouco de padding horizontal */
+}
+.cabecalho-sobre{
+    margin: 1%;
+    text-align: center;
+    box-shadow:0px 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
 }
 
 .header-left {
@@ -84,8 +132,26 @@
     display: flex;
     align-items: center;
     margin-top: 0.5rem; /* Ajusta o espaço entre o título e o campo de busca */
+   
 }
 
+.body-ceps{
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+.cep-container{
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 25%;
+    text-align: left;
+}
+.cep-container h5 {
+    font-size: medium;
+    color: #333;
+    text-align: left;
+}
 .search-input {
     width: 200px; /* Ajuste a largura do campo de busca conforme necessário */
 }

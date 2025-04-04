@@ -200,12 +200,12 @@ export default function ListarEmpresasExternas() {
     const companyDialogFooter = (
         <React.Fragment>
             <Button label="Cancelar" icon="pi pi-times" outlined onClick={hideDialog} className='btn-red-not-bg' />
-            <Button label="Confirmar" icon="pi pi-check" onClick={saveCompany} className='btn-orange' />
+            <Button label="Confirmar" icon="pi pi-check" onClick={saveCompany} className='btn-black' />
         </React.Fragment>
     );
     const deleteCompanyDialogFooter = (
         <React.Fragment>
-            <Button label="Não" icon="pi pi-times" outlined className='btn-orange-not-bg' onClick={hideDeleteCompanyDialog} />
+            <Button label="Não" icon="pi pi-times" outlined className='btn-black-not-bg' onClick={hideDeleteCompanyDialog} />
             <Button label="Sim" icon="pi pi-check" severity="danger" onClick={deleteCompany} />
         </React.Fragment>
     );

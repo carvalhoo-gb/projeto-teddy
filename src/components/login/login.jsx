@@ -35,11 +35,11 @@ export default function Login() {
 
     return (
         <div className="login-page" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <Card title="Login" style={{ width: '300px' }}>
+            <Card title="Login" style={{ width: '300px'}}>
                 <div className="p-fluid">
                     <div className="field">
                         <label htmlFor="username">Usuário</label>
-                        <InputText id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                        <InputText id="username" type='email' value={username} onChange={(e) => setUsername(e.target.value)} />
                     </div>
                     <div className="field">
                         <label htmlFor="password">Senha</label>
@@ -49,7 +49,7 @@ export default function Login() {
                         <Checkbox inputId="rememberMe" checked={rememberMe} onChange={(e) => setRememberMe(e.checked)} />
                         <label htmlFor="rememberMe">Manter Conectado</label>
                     </div>
-                    <Button label="Entrar" onClick={handleLogin} className="btn-entrar p-mt-3" />
+                    <Button label="Entrar" onClick={handleLogin} className="btn-entrar" />
                 </div>
             </Card>
         </div>
