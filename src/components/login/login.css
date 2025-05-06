@@ -8,3 +8,13 @@ body.login-page {
     height: 100vh; /* Ocupa a altura total da viewport */
     overflow: hidden; /* Remove qualquer rolagem */
 }
+.cadastro{
+    color: rgb(0, 119, 216);
+    text-align: right;
+    margin: 10px 7px 2px 7px;
+    text-decoration: underline;
+}
+
+.cadastro:hover{
+    cursor: pointer;
+}

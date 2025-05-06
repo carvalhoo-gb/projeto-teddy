@@ -12,6 +12,8 @@ import ListarParceiros from "./components/parceiros/listar-parceiros.component";
 import ListarEmpresasExternas from "./components/empresas-externas/listar-empresas-externas";
 import Sobre from "./components/sobre/sobre";
 import Login from "./components/login/login";
+import Cadastro from './components/cadastro/cadastro';
+
 
 function App() {
   const location = useLocation();
@@ -83,6 +85,7 @@ function App() {
       <div className="container mt-3">
         <Routes>
           <Route path="/" element={<Login />} />
+        <Route path="/cadastro" element={<Cadastro />}/>
           <Route path="/ListarParceiros" element={<ListarParceiros />} />
           <Route path="/ListarEmpresasExternas" element={<ListarEmpresasExternas />} />
           <Route path="/Sobre" element={<Sobre />} />

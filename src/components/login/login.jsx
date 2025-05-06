@@ -45,11 +45,10 @@ export default function Login() {
                         <label htmlFor="password">Senha</label>
                         <InputText id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </div>
-                    <div className="field-checkbox">
-                        <Checkbox inputId="rememberMe" checked={rememberMe} onChange={(e) => setRememberMe(e.checked)} />
-                        <label htmlFor="rememberMe">Manter Conectado</label>
-                    </div>
                     <Button label="Entrar" onClick={handleLogin} className="btn-entrar" />
+                    <div className='cadastro'>
+                    <a href='cadastro'>cadastre-se</a>
+                    </div>
                 </div>
             </Card>
         </div>
