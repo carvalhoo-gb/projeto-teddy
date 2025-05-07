@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "./cadastro.css";
 
 export default function Cadastro() {
   const [form, setForm] = useState({ nome: '', email: '', senha: '' });
