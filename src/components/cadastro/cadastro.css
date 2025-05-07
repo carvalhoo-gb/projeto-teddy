@@ -1,3 +1,9 @@
-body{
+body.cadastro-page{
     background-image: url("https://cdn.pixabay.com/photo/2014/06/16/23/40/purple-370132_1280.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0; /* Remove margens do body para evitar espaço em branco */
+    height: 100vh; /* Ocupa a altura total da viewport */
+    overflow: hidden; /* Remove qualquer rolagem */
 }

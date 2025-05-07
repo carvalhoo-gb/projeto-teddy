@@ -9,12 +9,10 @@ body.login-page {
     overflow: hidden; /* Remove qualquer rolagem */
 }
 .cadastro{
-    color: rgb(0, 119, 216);
+    margin: 10px 7px 0px 7px;
     text-align: right;
-    margin: 10px 7px 2px 7px;
-    text-decoration: underline;
 }
-
-.cadastro:hover{
-    cursor: pointer;
+.cadastro a{
+    color: rgb(41, 0, 80);
+    font-weight: 500;
 }
