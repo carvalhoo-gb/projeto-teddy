@@ -16,7 +16,7 @@
 }
 
 .p-button-success,
-.btn-entrar, .btn-black {
+.btn-entrar, .btn-black, .btn-cadastrar {
     
     background-color: #151515;
     border-color: #151515;
@@ -24,7 +24,7 @@
 }
 
 .p-button-success:hover,
-.btn-entrar:hover, .btn-black:hover {
+.btn-entrar:hover, .btn-black:hover, .btn-cadastrar:hover {
     background-color: #578690;
     border-color: #578690;
 }

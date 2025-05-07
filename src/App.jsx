@@ -79,13 +79,15 @@ function App() {
 
   return (
     <div className="card">
-      {location.pathname !== '/' && (
+      {!['/', '/cadastro'].includes(location.pathname) && (
         <Menubar model={items} start={start} end={end} className="custom-menubar" />
+        
       )}
+      
       <div className="container mt-3">
         <Routes>
           <Route path="/" element={<Login />} />
-        <Route path="/cadastro" element={<Cadastro />}/>
+          <Route path="/cadastro" element={<Cadastro />}/>
           <Route path="/ListarParceiros" element={<ListarParceiros />} />
           <Route path="/ListarEmpresasExternas" element={<ListarEmpresasExternas />} />
           <Route path="/Sobre" element={<Sobre />} />
